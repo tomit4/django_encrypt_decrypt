@@ -1,65 +1,16 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>image uploader</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-  </head>
-  <body>
-    <form action="">
-      <input type="file" accept="image/*" id="uploadInput" />
-      <input type="submit" id="submitBtn" value="Upload Image" />
-    </form>
-    <p id="errMsg"></p>
-    <img id="previewImg" height="600px" />
-  </body>
-  <script>
-    const input = document.getElementById("uploadInput");
-    const submitBtn = document.getElementById("submitBtn");
-    const previewImg = document.getElementById("previewImg");
-    const errMsg = document.getElementById("errMsg");
-
-    input.addEventListener("change", (e) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        previewImg.src = reader.result;
-      };
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
-      }
-    });
-
-    submitBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (input.files[0] !== undefined) {
-        uploadFile(input.files[0]);
-      } else {
-        errMsg.innerText = "Please Select a File To Upload!!";
-      }
-    });
-
-    // TODO: You'll need to grab the csrf token
-    // from backend somehow prior to doing this
-    // NOTE: Do NOT set Content-Type to multi-part/form data
-    const uploadFile = async (file) => {
-      const fd = new FormData();
-      fd.append("image", file);
-      try {
-        const res = await fetch("http://127.0.0.1:8000/upload", {
-          method: "POST",
-          body: fd,
-          // headers: {
-          // 'X-CSRFToken: csrftoken_elmt.value'
-          // },
-          //
-        });
-        const jsonRes = await res.json();
-        console.log("jsonRes :=>", jsonRes);
-        return jsonRes;
-      } catch (err) {
-        console.error("ERROR :=>", err);
-      }
-    };
-  </script>
+    <head>
+        <title>Upload/View Encrypted Images</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="robots"
+            content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+        <meta name="description" content="" />
+    </head>
+    <body>
+        <a href="./upload.html">Upload</a>
+        <a href="./gallery.html">Gallery</a>
+    </body>
 </html>

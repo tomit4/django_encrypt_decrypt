@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>image gallery</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="robots"
+            content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+        <meta name="description" content="" />
+    </head>
+    <body>
+        <a href="./index.html">Home</a>
+        <div id="gallery"></div>
+        <script>
+            const gallery = document.getElementById('gallery')
+            const previewImg = document.getElementById('previewImg')
+            window.onload = async () => {
+                try {
+                    const res = await fetch('http://127.0.0.1:8000/upload', {
+                        method: 'GET',
+                    })
+                    const imagesAsBase64 = await res.json()
+                    for (let i = 0; i < imagesAsBase64.length; i++) {
+                        const img = new Image()
+                        img.src = `data:image/jpg;base64, ${imagesAsBase64[i]}`
+                        gallery.appendChild(img)
+                    }
+                } catch (err) {
+                    console.error('ERROR :=>', err)
+                }
+            }
+        </script>
+    </body>
+</html>
